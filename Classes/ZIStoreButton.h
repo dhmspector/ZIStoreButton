@@ -25,6 +25,7 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 
+#define ZI_PRICE_STRING @"$0.00"
 #define ZI_BUY_NOW_TITLE @"Buy Now"
 #define ZI_COMING_SOON_TITLE @"Comming Soon"
 #define ZI_ALREADY_INSTALLED_TITLE @"Installed"

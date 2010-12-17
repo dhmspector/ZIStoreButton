@@ -74,22 +74,32 @@
         else
             self.startingMode = showingPrice;
         
-        // Store Button Modes:
+        // Store Button string properties:
         //  priceString, buyNowString, installedString, comingSoonString    
         if (!(self.priceString = [customizations objectForKey:@"priceString"])) 
-            self.priceString = @"$0.00"; // user really DOES need to set at least this one!
+            self.priceString = ZI_PRICE_STRING; // user really DOES need to set at least this one!
         
         if (!(self.buyNowString = [customizations objectForKey:@"buyNowString"])) 
-            self.buyNowString = @"PURCHASE"; 
+            self.buyNowString = ZI_BUY_NOW_TITLE; 
         
         if (!(self.installedString = [customizations objectForKey:@"alreadyInstalledString"])) 
-            self.installedString = @"$INSTALLED"; 
+            self.installedString = ZI_ALREADY_INSTALLED_TITLE; 
         
         if (!(self.comingSoonString = [customizations objectForKey:@"comingSoonString"])) 
-            self.comingSoonString = @"Coming Soon";
+            self.comingSoonString = ZI_COMING_SOON_TITLE;
         
+        [self setTitle:self.priceString forState:UIControlStateNormal];
+		[self setTitleShadowColor:[UIColor colorWithWhite:0.200 alpha:1.000] forState:UIControlStateNormal];
 
-        // Arrays of CGColor values with the following keys    
+        [self setTitle:self.buyNowString forState:UIControlStateSelected];
+		[self setTitleShadowColor:[UIColor colorWithWhite:0.200 alpha:1.000] forState:UIControlStateSelected];
+
+		[self.titleLabel setShadowOffset:CGSizeMake(0.0, -0.6)];
+		[self.titleLabel setFont:[UIFont boldSystemFontOfSize:12.0]];
+		self.titleLabel.textColor = [UIColor colorWithWhite:0.902 alpha:1.000];
+        
+        
+        // Arrays of CGColor values map to the following keys:
         //    priceColors, buyColors, alreadyInstalledColors, comingSoonColors        
         if (customizations) {
             if (!(self.priceColors = [customizations objectForKey:@"priceColors"])) 
@@ -100,18 +110,17 @@
                                [UIColor colorWithRed:0.159 green:0.270 blue:0.550 alpha:1.000].CGColor,
                                [UIColor colorWithRed:0.129 green:0.220 blue:0.452 alpha:1.000].CGColor,
                                nil];
-                [priceColors retain];
+//                [priceColors retain];
             }
             if (!(self.buyColors = [customizations objectForKey:@"buyColors"])) {
                 // Medium Green
-
                 self.buyColors = [NSArray arrayWithObjects:(id)
                              [UIColor colorWithRed:0.482 green:0.674 blue:0.406 alpha:1.000].CGColor,
                              [UIColor colorWithRed:0.525 green:0.742 blue:0.454 alpha:1.000].CGColor,
                              [UIColor colorWithRed:0.346 green:0.719 blue:0.183 alpha:1.000].CGColor,
                              [UIColor colorWithRed:0.299 green:0.606 blue:0.163 alpha:1.000].CGColor,
                              nil];
-                [buyColors retain];
+//                [buyColors retain];
             }
             if (!(self.alreadyInstalledColors = [customizations objectForKey:@"alreadyInstalledColors"])) {
                 // Slate Gray
@@ -121,22 +130,20 @@
                                           [UIColor colorWithRed:0.660 green:0.660 blue:0.660 alpha:1.000].CGColor,                                        
                                           [UIColor colorWithRed:0.660 green:0.660 blue:0.660 alpha:1.000].CGColor,                                        
                                           nil];
-                [alreadyInstalledColors retain];
+//                [alreadyInstalledColors retain];
             }
             if (!(self.comingSoonColors = [customizations objectForKey:@"comingSoonColors"])) {
                 // Rust orange
                 self.comingSoonColors = [NSArray arrayWithObjects:(id)
                                     [UIColor colorWithRed:0.631 green:0.208 blue:0.086 alpha:1.000].CGColor,                                       
                                     [UIColor colorWithRed:0.600 green:0.180 blue:0.066 alpha:1.000].CGColor,
-                                    [UIColor colorWithRed:0.660 green:0.660 blue:0.660 alpha:1.000].CGColor,                                        
-                                    [UIColor colorWithRed:0.729 green:0.325 blue:0.204 alpha:1.000].CGColor,                                        
+                                    [UIColor colorWithRed:0.580 green:0.160 blue:0.440 alpha:1.000].CGColor,                                        
+                                    [UIColor colorWithRed:0.560 green:0.140 blue:0.220 alpha:1.000].CGColor,                                        
                                     nil];
-                [comingSoonColors retain];            
+//                [comingSoonColors retain];            
             }
                 
         } // of customizations
-        
-        
         
 		
 		[self addTarget:self action:@selector(touchedUpOutside:) forControlEvents:UIControlEventTouchUpOutside];
@@ -160,16 +167,20 @@
         switch (startingMode) {
             case showingPrice:
                 innerLayer3.colors = self.priceColors;                  //blueColors;
+                [self setTitle:priceString forState:UIControlStateNormal];
                 break;
             case showingInstalled:
                 innerLayer3.colors = self.alreadyInstalledColors;       //grayColors;
+                 [self setTitle:installedString forState:UIControlStateNormal];
                 [self setEnabled:NO];
                 break;
             case showingPurchase:
                 innerLayer3.colors = self.buyColors;                    //greenColors;
+                [self setTitle:buyNowString forState:UIControlStateSelected];
                 break;
             case showingComingSoon:
                 innerLayer3.colors = self.comingSoonColors;
+                [self setTitle:comingSoonString forState:UIControlStateNormal];
                 [self setEnabled:NO];
                 break;
             default:
@@ -185,14 +196,6 @@
 		[self.layer addSublayer:bevelLayer2];
 		[self.layer addSublayer:innerLayer2];
 		[self.layer addSublayer:innerLayer3];
-        
-        [self setTitle: self.buyNowString ? self.buyNowString : ZI_BUY_NOW_TITLE forState:UIControlStateSelected];
-		[self setTitleShadowColor:[UIColor colorWithWhite:0.200 alpha:1.000] forState:UIControlStateNormal];
-		[self setTitleShadowColor:[UIColor colorWithWhite:0.200 alpha:1.000] forState:UIControlStateSelected];
-		[self.titleLabel setShadowOffset:CGSizeMake(0.0, -0.6)];
-		[self.titleLabel setFont:[UIFont boldSystemFontOfSize:12.0]];
-		self.titleLabel.textColor = [UIColor colorWithWhite:0.902 alpha:1.000];
-
         
 		
 		[self bringSubviewToFront:self.titleLabel];
@@ -213,10 +216,7 @@
     
 	animation.fromValue = (!self.selected) ? self.buyColors : self.priceColors;
 	animation.toValue = (!self.selected) ? self.priceColors : self.buyColors;
-    
-    //	animation.fromValue = (!self.selected) ? greenColors : blueColors;
-    //	animation.toValue = (!self.selected) ? blueColors : greenColors;
-	
+    	
 	animation.duration = 0.25;
 	animation.removedOnCompletion = NO;
 	animation.fillMode = kCAFillModeForwards;
@@ -228,8 +228,8 @@
 	NSString *title = (self.selected ? [self titleForState:UIControlStateSelected] : [self titleForState:UIControlStateNormal]);
 	CGSize constr = (CGSize){.height = self.frame.size.height, .width = ZI_MAX_WIDTH};
 	CGSize newSize = [title sizeWithFont:self.titleLabel.font constrainedToSize:constr lineBreakMode:UILineBreakModeMiddleTruncation];
-	CGFloat newWidth = newSize.width + (ZI_PADDING*2);
-	CGFloat diff = self.frame.size.width-newWidth;
+	CGFloat newWidth = newSize.width + (ZI_PADDING * 2);
+	CGFloat diff = self.frame.size.width - newWidth;
 	
 	for (CALayer *la in self.layer.sublayers) {
 		CGRect cr = la.bounds;
@@ -243,8 +243,11 @@
 	cr.size.width = cr.size.width;
 	cr.size.width = newWidth;
 	self.frame = cr;
-	self.titleEdgeInsets = UIEdgeInsetsMake(2.0, self.titleEdgeInsets.left+diff, 0.0, 0.0);	
+	self.titleEdgeInsets = UIEdgeInsetsMake(2.0, self.titleEdgeInsets.left + diff, 0.0, 0.0);	
 	[CATransaction commit];
+    
+    NSLog(@"%@", [NSString stringWithFormat:@"UIControlStateSelected title: \"%@\"  UIControlStateNormal title: \"%@\" ", 
+                  [self titleForState:UIControlStateSelected], [self titleForState:UIControlStateNormal]]);
 }
 
 - (IBAction) touchedUpOutside:(id)sender {

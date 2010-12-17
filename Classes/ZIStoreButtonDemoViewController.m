@@ -33,7 +33,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     NSDictionary *myCustomizations = [NSDictionary dictionaryWithObjectsAndKeys:
-                                    [NSNumber numberWithInt:showingComingSoon], @"startingMode",
+                                    [NSNumber numberWithInt:showingPrice], @"startingMode",
                                     @"$3.99", @"priceString",
                                     @"BUY ME!", @"buyNowString",
                                     @"Installed!", @"alreadyInstalledString",
