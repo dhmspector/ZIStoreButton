@@ -198,6 +198,7 @@
 				GCC_PREFIX_HEADER = ZIStoreButtonDemo_Prefix.pch;
 				INFOPLIST_FILE = "ZIStoreButtonDemo-Info.plist";
 				PRODUCT_NAME = ZIStoreButtonDemo;
+				SDKROOT = iphoneos;
 			};
 			name = Debug;
 		};

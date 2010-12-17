@@ -3,10 +3,12 @@
 //  ZIStoreButtonDemo
 //
 //  Created by Brandon Emrich on 7/20/10.
+//  Specialized customizations by David HM Spector <spector@zeitgeist.com> on 12/16/2010
 */
 
 /*
 //	Copyright 2010 Brandon Emrich
+//  Additions Copyright 2010 David HM Spector
 //
 //	Licensed under the Apache License, Version 2.0 (the "License");
 //	you may not use this file except in compliance with the License.
@@ -30,9 +32,42 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-		
-	ZIStoreButton *button = [[ZIStoreButton alloc] initWithFrame:CGRectMake(0.0, 0.0, 50.0, 22.0)];
-	[button setTitle:@"$0.99" forState:UIControlStateNormal];
+    NSDictionary *myCustomizations = [NSDictionary dictionaryWithObjectsAndKeys:
+                                    [NSNumber numberWithInt:showingComingSoon], @"startingMode",
+                                    @"$3.99", @"priceString",
+                                    @"BUY ME!", @"buyNowString",
+                                    @"Installed!", @"alreadyInstalledString",
+                                    @"Coming 2011", @"comingSoonString",
+                                    
+                                    [NSArray arrayWithObjects:(id)[UIColor colorWithRed:0.306 green:0.380 blue:0.547 alpha:1.000].CGColor,
+                                     [UIColor colorWithRed:0.258 green:0.307 blue:0.402 alpha:1.000].CGColor,
+                                     [UIColor colorWithRed:0.159 green:0.270 blue:0.550 alpha:1.000].CGColor,
+                                     [UIColor colorWithRed:0.129 green:0.220 blue:0.452 alpha:1.000].CGColor, nil], @"priceColors",
+                                    
+                                    
+                                    [NSArray arrayWithObjects:(id)
+                                     [UIColor colorWithRed:0.482 green:0.674 blue:0.406 alpha:1.000].CGColor,
+                                     [UIColor colorWithRed:0.525 green:0.742 blue:0.454 alpha:1.000].CGColor,
+                                     [UIColor colorWithRed:0.346 green:0.719 blue:0.183 alpha:1.000].CGColor,
+                                     [UIColor colorWithRed:0.299 green:0.606 blue:0.163 alpha:1.000].CGColor, nil], @"buyColors",
+                                    
+                                    [NSArray arrayWithObjects:(id)
+                                     [UIColor colorWithRed:0.660 green:0.660 blue:0.660 alpha:1.000].CGColor,                                       
+                                     [UIColor colorWithRed:0.660 green:0.660 blue:0.660 alpha:1.000].CGColor,
+                                     [UIColor colorWithRed:0.660 green:0.660 blue:0.660 alpha:1.000].CGColor,                                        
+                                     [UIColor colorWithRed:0.660 green:0.660 blue:0.660 alpha:1.000].CGColor, nil], @"alreadyInstalledColors",
+                                    
+                                    [NSArray arrayWithObjects:(id)
+                                     [UIColor colorWithRed:0.631 green:0.208 blue:0.086 alpha:1.000].CGColor,                                       
+                                     [UIColor colorWithRed:0.600 green:0.180 blue:0.066 alpha:1.000].CGColor,
+                                     [UIColor colorWithRed:0.660 green:0.660 blue:0.660 alpha:1.000].CGColor,                                        
+                                     [UIColor colorWithRed:0.729 green:0.325 blue:0.204 alpha:1.000].CGColor, nil], @"comingSoonColors"
+                                    
+                                    ,nil];
+    
+    
+	ZIStoreButton *button = [[ZIStoreButton alloc] initWithFrame:CGRectMake(0.0, 0.0, 85.0, 22.0) customizations:myCustomizations];
+    
 	button.center = self.view.center;
 	
 	CAGradientLayer *bgLayer = [self backgroundLayer];
