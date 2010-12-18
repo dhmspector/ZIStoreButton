@@ -214,9 +214,13 @@
 	CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"colors"];
     
     
+//	animation.fromValue = (!self.selected) ? self.buyColors : self.priceColors;
+//	animation.toValue = (!self.selected) ? self.priceColors : self.buyColors;
+
 	animation.fromValue = (!self.selected) ? self.buyColors : self.priceColors;
 	animation.toValue = (!self.selected) ? self.priceColors : self.buyColors;
-    	
+    
+    
 	animation.duration = 0.25;
 	animation.removedOnCompletion = NO;
 	animation.fillMode = kCAFillModeForwards;
@@ -231,6 +235,7 @@
 	CGFloat newWidth = newSize.width + (ZI_PADDING * 2);
 	CGFloat diff = self.frame.size.width - newWidth;
 	
+
 	for (CALayer *la in self.layer.sublayers) {
 		CGRect cr = la.bounds;
 		cr.size.width = cr.size.width;
@@ -248,6 +253,9 @@
     
     NSLog(@"%@", [NSString stringWithFormat:@"UIControlStateSelected title: \"%@\"  UIControlStateNormal title: \"%@\" ", 
                   [self titleForState:UIControlStateSelected], [self titleForState:UIControlStateNormal]]);
+//    NSLog(@"%@", [NSString stringWithFormat:@"Button label color for UIControlStateNormal is %@;  UIControlStateSelected is %@", 
+//                [[self titleColorForState:UIControlStateNormal] description],[[self titleColorForState:UIControlStateSelected] description]]);
+
 }
 
 - (IBAction) touchedUpOutside:(id)sender {
